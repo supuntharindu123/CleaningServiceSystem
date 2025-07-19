@@ -1,4 +1,12 @@
-const LightDarkLoginPage = () => {
+import React from "react";
+import { useNavigate } from "react-router-dom";
+function Login() {
+  const navigate = useNavigate();
+
+  const navigateToRegister = () => {
+    navigate("/register");
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -95,13 +103,16 @@ const LightDarkLoginPage = () => {
           </div>
 
           {/* Sign Up Link */}
-          <button className="w-full border border-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white transition-all duration-200">
+          <button
+            onClick={navigateToRegister}
+            className="w-full border border-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 focus:ring-offset-white transition-all duration-200"
+          >
             Create Account
           </button>
         </div>
       </div>
     </div>
   );
-};
+}
 
-export default LightDarkLoginPage;
+export default Login;

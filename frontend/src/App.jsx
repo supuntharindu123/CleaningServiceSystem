@@ -7,8 +7,17 @@ import RegisterPage from "./pages/RegisterPage";
 import Navbar from "./componets/NavBar";
 import BookingPage from "./pages/BookingPage";
 
+import NotFound from "./pages/NotFound";
+import UnAuthorizedPage from "./pages/UnAuthorizedPage";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import HomePage from "./pages/HomePage";
+
 function App() {
   const router = [
+    {
+      path: "/",
+      element: <HomePage />,
+    },
     {
       path: "/login",
       element: <LoginPage />,
@@ -19,7 +28,19 @@ function App() {
     },
     {
       path: "/booking",
-      element: <BookingPage />,
+      element: (
+        <ProtectedRoute>
+          <BookingPage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "*",
+      element: <NotFound />,
+    },
+    {
+      path: "/unauthorized",
+      element: <UnAuthorizedPage />,
     },
   ];
   return (

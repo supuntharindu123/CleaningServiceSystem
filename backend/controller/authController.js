@@ -52,9 +52,9 @@ export async function Login(req, res) {
     const token = await generateToken(user._id, username);
 
     res.status(200).json({
-      msg: "Login successful",
+      userDetails: { username: user.username, role: user.role },
       token,
-      user: { username: user.username, role: user.role },
+      msg: "Login Successful !",
     });
   } catch (error) {
     console.log("Login Failed!");

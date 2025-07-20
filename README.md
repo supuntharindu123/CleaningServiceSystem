@@ -4,8 +4,8 @@ A web application where users can book cleaning services and manage their bookin
 
 ## 🚀 Tech Stack
 
-**Frontend**: React, Context API, Tailwind CSS
-**Backend**: Node.js, Express.js
+**Frontend**: React, Context API, Tailwind CSS,Axios,React-Router-Dom
+**Backend**: Node.js, Express.js,REST Api
 **Database**: MongoDB
 **Authentication**: JWT + bcrypt
 
@@ -25,6 +25,7 @@ project-root/
 │   ├── routes/
 │   ├── controller/
 │   ├── middlewares/
+│   ├── utill/
 │   └── .gitignore
 ├── .env            # Environment variables
 └── README.md
@@ -41,16 +42,17 @@ git clone https://github.com/supuntharindu123/CleaningServiceSystem.git
 cd cleaning-service-app
 ```
 
-### 2. Backend Setup (`/server`)
+### 2. Backend Setup (`/backend`)
 
 ```bash
-cd server
+cd backend
 npm install
 ```
 
 #### Create `.env` file
 
 ```env
+PORT=3000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_key
 ```
@@ -58,15 +60,15 @@ JWT_SECRET=your_jwt_secret_key
 #### Start server
 
 ```bash
-node nodemon server.js
+npx nodemon server.js
 ```
 
 ---
 
-### 3. Frontend Setup (`/client`)
+### 3. Frontend Setup (`/frontend`)
 
 ```bash
-cd client
+cd frontend
 npm install
 npm run dev      # or npm start
 ```

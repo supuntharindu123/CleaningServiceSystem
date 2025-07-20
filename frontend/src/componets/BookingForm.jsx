@@ -1,24 +1,45 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CreateBooking } from "../actions/bookingActions";
+
 import { useAuth } from "../context/authcontext";
 import { fetchServices } from "../actions/serviceActions";
 
-const BookingForm = () => {
+const BookingForm = ({ BookingAction, InitialData, IsEdit, bookingId }) => {
   const { axiosInstance } = useAuth();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    username: "",
-    address: "",
-    dateTime: "",
-    serviceType: "",
+    username: InitialData.username || "",
+    address: InitialData.address || "",
+    dateTime: InitialData.dateTime || "",
+    serviceType: InitialData.serviceType || "",
   });
 
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const formatDateForInput = (dateString) => {
+      if (!dateString) return "";
+
+      try {
+        const date = new Date(dateString);
+        // Check if date is valid
+        if (isNaN(date.getTime())) return "";
+
+        // Format: YYYY-MM-DDTHH:MM (required format for datetime-local)
+        return date.toISOString().slice(0, 16);
+      } catch (error) {
+        console.error("Error formatting date:", error);
+        return "";
+      }
+    };
+    setFormData({
+      username: InitialData.username,
+      address: InitialData.address,
+      dateTime: formatDateForInput(InitialData.dateTime),
+      serviceType: InitialData.serviceType,
+    });
     const getServices = async () => {
       try {
         setLoading(true);
@@ -32,7 +53,7 @@ const BookingForm = () => {
     };
 
     getServices();
-  }, []);
+  }, [InitialData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,16 +68,26 @@ const BookingForm = () => {
       return;
     }
 
+    console.log("Form Data:", formData);
+    console.log(bookingId);
+
     try {
-      const response = await CreateBooking(axiosInstance, formData);
+      var response;
+      if (IsEdit) {
+        response = await BookingAction(axiosInstance, bookingId, formData);
+        console.log("edit");
+      } else {
+        response = await BookingAction(axiosInstance, formData);
+      }
+
       if (response.success) {
-        alert(response.data.msg || "Booking created successfully!");
-        navigate("/");
+        alert(response.data.msg);
+        navigate("/dashboard");
       } else {
         alert("Error: " + response.error);
       }
     } catch (error) {
-      console.error("Failed to create booking:", error);
+      console.error("Failed ", error);
       alert(error.msg);
     }
   };
@@ -65,7 +96,7 @@ const BookingForm = () => {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
         <h2 className="text-3xl font-bold text-emerald-700 mb-6 text-center">
-          Book a Cleaning Service
+          {IsEdit ? "Update Your Booking" : "Book a Cleaning Service"}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
@@ -164,7 +195,11 @@ const BookingForm = () => {
               disabled={loading || !formData.serviceType}
               className="w-full bg-gradient-to-r from-gray-500 to-emerald-700 text-white py-3 px-4 rounded-lg hover:from-emerald-700 hover:to-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? "Loading..." : "Confirm Booking"}
+              {loading
+                ? "Loading..."
+                : IsEdit
+                ? "Update Booking"
+                : "Confirm Booking"}
             </button>
           </div>
         </form>

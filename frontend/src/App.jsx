@@ -12,6 +12,7 @@ import UnAuthorizedPage from "./pages/UnAuthorizedPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import HomePage from "./pages/HomePage";
 import DashBoardPage from "./pages/DashBoardPage";
+import UpdateBookingPage from "./pages/UpdateBookingPage";
 
 function App() {
   const router = [
@@ -30,6 +31,10 @@ function App() {
     {
       path: "/booking",
       element: <BookingPage />,
+    },
+    {
+      path: "/booking/:id",
+      element: <UpdateBookingPage />,
     },
     {
       path: "/dashboard",

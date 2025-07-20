@@ -1,10 +1,23 @@
 import React from "react";
 import BookingForm from "../componets/BookingForm";
+import { CreateBooking } from "../actions/bookingActions";
 
 function BookingPage() {
+  const InitialData = {
+    username: "",
+    address: "",
+    dateTime: "",
+    serviceType: "",
+  };
+
   return (
     <div className="min-h-screen justify-center items-center  min-w-1">
-      <BookingForm />
+      <BookingForm
+        BookingAction={CreateBooking}
+        InitialData={InitialData}
+        IsEdit={false}
+        bookingId={null}
+      />
     </div>
   );
 }

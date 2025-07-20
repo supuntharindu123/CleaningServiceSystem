@@ -3,6 +3,7 @@ import {
   createBooking,
   deleteBooking,
   getBookings,
+  getBookingsById,
   getBookingsByUserId,
   updateBooking,
 } from "../controller/bookingController.js";
@@ -15,5 +16,6 @@ router.get("/", auth, getBookings);
 router.get("/user/:id", auth, getBookingsByUserId);
 router.put("/:id", auth, updateBooking);
 router.delete("/:id", auth, deleteBooking);
+router.get("/:id", auth, getBookingsById);
 
 export default router;

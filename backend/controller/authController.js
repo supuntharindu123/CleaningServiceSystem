@@ -2,6 +2,11 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import generateToken from "../utill/generateToken.js";
 
+/**
+ * @desc    User Register
+ * @route   POST /api/auth/register
+ * @access  Public
+ */
 export async function Register(req, res) {
   try {
     const { username, password } = req.body;
@@ -30,6 +35,11 @@ export async function Register(req, res) {
   }
 }
 
+/**
+ * @desc    Login
+ * @route   POST /api/auth/login
+ * @access  Public
+ */
 export async function Login(req, res) {
   try {
     const { username, password } = req.body;
@@ -49,7 +59,7 @@ export async function Login(req, res) {
       return res.status(400).json({ msg: "Invalid username or password" });
     }
 
-    const token = await generateToken(user._id, username);
+    const token = await generateToken(user._id, username, user.role);
 
     res.status(200).json({
       userDetails: { username: user.username, role: user.role },

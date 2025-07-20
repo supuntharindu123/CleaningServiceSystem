@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import connectDB from "./utill/db.js";
 import ServiceRouter from "./routes/serviceRoutes.js";
+import BookingRouter from "./routes/bookingRoutes.js";
 import AuthRouter from "./routes/authRoutes.js";
 
 dotenv.config();
@@ -13,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/services", ServiceRouter);
+app.use("/api/booking", BookingRouter);
 app.use("/api/auth", AuthRouter);
 
 app.listen(port, async () => {

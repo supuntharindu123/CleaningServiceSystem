@@ -6,8 +6,8 @@ import JWT from "jsonwebtoken";
  * @param {string} username - username
  * @returns {string} JWT token
  */
-function generateToken(userId, username) {
-  const token = JWT.sign({ userId, username }, process.env.JWT_SECRET, {
+function generateToken(userId, username, role) {
+  const token = JWT.sign({ userId, username, role }, process.env.JWT_SECRET, {
     expiresIn: "24h",
   });
   return token;

@@ -28,11 +28,7 @@ function App() {
     },
     {
       path: "/booking",
-      element: (
-        <ProtectedRoute>
-          <BookingPage />
-        </ProtectedRoute>
-      ),
+      element: <BookingPage />,
     },
     {
       path: "*",

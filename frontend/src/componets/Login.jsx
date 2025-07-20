@@ -156,12 +156,12 @@ function Login() {
                 >
                   Password
                 </label>
-                <a
+                {/* <a
                   href="#"
                   className="text-sm text-gray-500 hover:text-emerald-400"
                 >
                   Forgot?
-                </a>
+                </a> */}
               </div>
               <input
                 type="password"
@@ -180,22 +180,6 @@ function Login() {
               {errors.password && (
                 <p className="text-red-600 text-xs mt-1">{errors.password}</p>
               )}
-            </div>
-
-            {/* Remember Me & Submit */}
-            <div className="flex items-center">
-              <input
-                type="checkbox"
-                id="remember"
-                name="remember"
-                className="h-4 w-4 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded"
-              />
-              <label
-                htmlFor="remember"
-                className="ml-2 block text-sm text-gray-600"
-              >
-                Remember this device
-              </label>
             </div>
 
             <button

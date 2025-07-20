@@ -1,8 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/authcontext";
 
 const Navbar = () => {
+  const { user, logout } = useAuth(); // Added logout here
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    setIsOpen(false);
+  };
 
   return (
     <nav className="bg-white shadow-sm border-b border-gray-200">
@@ -42,20 +49,53 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Right side items */}
-          <div className="hidden sm:ml-6 sm:flex sm:items-center">
-            <Link
-              to="/login"
-              className="border-transparent text-gray-500 hover:text-gray-700 inline-flex items-center px-4 py-2 text-sm font-medium"
-            >
-              Sign In
-            </Link>
-            <Link
-              to="/register"
-              className="ml-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:from-emerald-600 hover:to-emerald-700 shadow-sm"
-            >
-              Register
-            </Link>
+          {/* Right side items - Desktop */}
+          <div className="hidden sm:ml-6 sm:flex sm:items-center space-x-4">
+            {user ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Dashboard
+                </Link>
+                {user.role === "admin" && (
+                  <Link
+                    to="/admin"
+                    className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Admin
+                  </Link>
+                )}
+                <Link
+                  to="/profile"
+                  className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Profile
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/register"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+                >
+                  Register
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -106,36 +146,79 @@ const Navbar = () => {
           <Link
             to="/services"
             className="bg-emerald-50 border-emerald-500 text-emerald-700 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+            onClick={() => setIsOpen(false)}
           >
             Services
           </Link>
           <Link
             to="/about"
             className="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+            onClick={() => setIsOpen(false)}
           >
             About
           </Link>
           <Link
             to="/contact"
             className="border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800 block pl-3 pr-4 py-2 border-l-4 text-base font-medium"
+            onClick={() => setIsOpen(false)}
           >
             Contact
           </Link>
-          <div className="border-t border-gray-200 pt-4 pb-3">
-            <div className="space-y-1">
-              <Link
-                to="/login"
-                className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
-              >
-                Sign In
-              </Link>
-              <Link
-                to="/register"
-                className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
-              >
-                Register
-              </Link>
-            </div>
+        </div>
+
+        {/* Mobile User Menu */}
+        <div className="border-t border-gray-200 pt-4 pb-3">
+          <div className="space-y-1">
+            {user ? (
+              <>
+                <Link
+                  to="/dashboard"
+                  className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Dashboard
+                </Link>
+                {user.role === "admin" && (
+                  <Link
+                    to="/admin"
+                    className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Admin Dashboard
+                  </Link>
+                )}
+                <Link
+                  to="/profile"
+                  className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Profile
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="block w-full text-left px-4 py-2 text-base font-medium text-red-500 hover:text-red-800 hover:bg-red-50"
+                >
+                  Log Out
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Sign In
+                </Link>
+                <Link
+                  to="/register"
+                  className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Register
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

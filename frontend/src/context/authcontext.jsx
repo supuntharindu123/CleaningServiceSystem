@@ -9,13 +9,18 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password) => {
     try {
-      const response = axios.post("http://localhost:3000/api/auth/login", {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/login",
+        {
+          username,
+          password,
+        }
+      );
       console.log(`Login response:`, response);
-      const { userDetails, token } = response?.data;
+      const { userDetails, token } = response.data;
       setUser(userDetails);
+
+      console.log(`Setting user:`, user);
       localStorage.setItem("token", token);
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
       return { success: true };

@@ -12,39 +12,32 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-200">
+    <nav className="bg-white shadow-sm border-b border-gray-200 ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo and main links */}
           <div className="flex">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center">
-              <Link to="/" className="text-xl font-bold">
+              <div className="bg-gradient-to-r from-emerald-600 to-blue-600 p-2 rounded-lg mr-3">
+                <svg
+                  className="h-6 w-6 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                  />
+                </svg>
+              </div>
+              <Link to="/" className="text-3xl font-bold">
                 <span className="bg-gradient-to-r from-emerald-500 to-emerald-700 bg-clip-text text-transparent">
                   CleanPro
                 </span>
-              </Link>
-            </div>
-
-            {/* Desktop Navigation */}
-            <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-              <Link
-                to="/services"
-                className="border-emerald-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                Services
-              </Link>
-              <Link
-                to="/about"
-                className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                About
-              </Link>
-              <Link
-                to="/contact"
-                className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
-              >
-                Contact
               </Link>
             </div>
           </div>
@@ -55,27 +48,27 @@ const Navbar = () => {
               <>
                 <Link
                   to="/dashboard"
-                  className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-lg font-medium"
                 >
                   Dashboard
                 </Link>
                 {user.role === "admin" && (
                   <Link
                     to="/admin"
-                    className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium"
+                    className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-lg font-medium"
                   >
                     Admin
                   </Link>
                 )}
                 <Link
                   to="/profile"
-                  className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-lg font-medium"
                 >
                   Profile
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-lg font-medium"
                 >
                   Logout
                 </button>
@@ -84,13 +77,13 @@ const Navbar = () => {
               <>
                 <Link
                   to="/login"
-                  className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-sm font-medium"
+                  className="text-gray-700 hover:text-emerald-600 px-3 py-2 rounded-md text-lg font-medium"
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md text-lg font-medium"
                 >
                   Register
                 </Link>

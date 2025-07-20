@@ -5,7 +5,9 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || null
+  );
   const [usertoken, setuserToken] = useState(localStorage.getItem("token"));
 
   const axiosInstance = axios.create({
@@ -33,6 +35,7 @@ export const AuthProvider = ({ children }) => {
       setUser(userDetails);
       setuserToken(token);
       localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(userDetails));
 
       return { success: true };
     } catch (error) {
@@ -47,6 +50,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setuserToken("");
   };
   return (

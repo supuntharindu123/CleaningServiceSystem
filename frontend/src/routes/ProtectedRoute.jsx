@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/authcontext.jsx";
+import { Children } from "react";
 
-const ProtectedRoute = ({}) => {
+const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
 
   // If user is not authenticated, redirect to login page
@@ -14,8 +15,7 @@ const ProtectedRoute = ({}) => {
     return <Navigate to="/unauthorized" replace />; // or your preferred redirect
   }
 
-  // If all checks pass, render the child routes
-  return <Outlet />;
+  return children;
 };
 
 export default ProtectedRoute;

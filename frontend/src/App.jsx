@@ -13,6 +13,9 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import HomePage from "./pages/HomePage";
 import DashBoardPage from "./pages/DashBoardPage";
 import UpdateBookingPage from "./pages/UpdateBookingPage";
+import AdminPage from "./pages/AdminPage";
+import AdminUserPage from "./pages/AdminUserPage";
+import AdminServicePage from "./pages/AdminServicePage";
 
 function App() {
   const router = [
@@ -39,6 +42,22 @@ function App() {
     {
       path: "/dashboard",
       element: <DashBoardPage />,
+    },
+    {
+      path: "/admin",
+      element: (
+        <ProtectedRoute>
+          <AdminPage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/admin/users",
+      element: <AdminUserPage />,
+    },
+    {
+      path: "/admin/services",
+      element: <AdminServicePage />,
     },
     {
       path: "*",

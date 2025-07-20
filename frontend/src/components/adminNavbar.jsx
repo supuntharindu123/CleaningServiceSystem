@@ -13,10 +13,12 @@ const AdminNavbar = () => {
     navigate("/login");
   };
 
+  // Check if the current route is active
   const isActiveRoute = (path) => {
     return location.pathname === path;
   };
 
+  // Navigation items
   const navItems = [
     {
       name: "Bookings",

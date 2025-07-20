@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Define the Booking schema
 const bookingSchema = new mongoose.Schema(
   {
     customer_name: {

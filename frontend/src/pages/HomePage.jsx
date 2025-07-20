@@ -27,6 +27,7 @@ const HomePage = () => {
     },
   ];
 
+  // Fetch services on component mount
   useEffect(() => {
     const loadServices = async () => {
       try {

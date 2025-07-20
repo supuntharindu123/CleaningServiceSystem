@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   );
   const [usertoken, setuserToken] = useState(localStorage.getItem("token"));
 
+  // Axios instance with base URL and headers
   const axiosInstance = axios.create({
     baseURL: "http://localhost:3000/api",
     headers: {
@@ -17,6 +18,7 @@ export const AuthProvider = ({ children }) => {
     },
   });
 
+  // Interceptor to add token to requests
   axiosInstance.interceptors.request.use((config) => {
     if (usertoken) {
       config.headers["Authorization"] = `Bearer ${usertoken}`;
@@ -24,6 +26,7 @@ export const AuthProvider = ({ children }) => {
     return config;
   });
 
+  // Login function
   const login = async (username, password) => {
     try {
       const response = await axiosInstance.post("/auth/login", {
@@ -47,6 +50,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Logout function
   const logout = () => {
     setUser(null);
     localStorage.removeItem("token");

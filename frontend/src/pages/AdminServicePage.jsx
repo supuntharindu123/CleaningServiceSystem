@@ -24,8 +24,8 @@ const AdminServicePage = () => {
 
   const { axiosInstance } = useAuth();
 
-  // Fetch services on component mount
   useEffect(() => {
+    // Function to load services
     const loadServices = async () => {
       try {
         setLoading(true);
@@ -54,6 +54,7 @@ const AdminServicePage = () => {
       service.description?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Format date for display
   const formatDate = (dateTime) => {
     if (!dateTime) return "No date";
     return new Date(dateTime).toLocaleDateString("en-US", {
@@ -83,6 +84,7 @@ const AdminServicePage = () => {
     setShowModal(true);
   };
 
+  // Close modal handler
   const closeModal = () => {
     setShowModal(false);
     setSelectedService(null);

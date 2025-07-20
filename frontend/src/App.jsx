@@ -53,11 +53,19 @@ function App() {
     },
     {
       path: "/admin/users",
-      element: <AdminUserPage />,
+      element: (
+        <ProtectedRoute>
+          <AdminUserPage />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/admin/services",
-      element: <AdminServicePage />,
+      element: (
+        <ProtectedRoute>
+          <AdminServicePage />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "*",

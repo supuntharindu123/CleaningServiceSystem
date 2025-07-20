@@ -1,5 +1,6 @@
-import axios from "axios";
+// frontend/src/actions/serviceActions.jsx
 
+//Fetch services
 export async function fetchServices(axiosInstance) {
   try {
     const response = await axiosInstance.get("/services");
@@ -14,6 +15,7 @@ export async function fetchServices(axiosInstance) {
   }
 }
 
+//create a new service
 export async function createService(serviceName, description, axiosInstance) {
   try {
     const response = await axiosInstance.post("/services", {
@@ -30,6 +32,7 @@ export async function createService(serviceName, description, axiosInstance) {
   }
 }
 
+//update service
 export async function updateService(
   serviceId,
   serviceName,
@@ -51,6 +54,7 @@ export async function updateService(
   }
 }
 
+//remove service
 export async function deleteService(serviceId, axiosInstance) {
   try {
     const response = await axiosInstance.delete(`/services/${serviceId}`);
@@ -64,6 +68,7 @@ export async function deleteService(serviceId, axiosInstance) {
   }
 }
 
+//Get service from id
 export async function GetservicesById(serviceId, axiosInstance) {
   try {
     const response = await axiosInstance.get(`/services/${serviceId}`);

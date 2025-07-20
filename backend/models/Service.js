@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Define the Booking schema
 const ServicesSchema = new mongoose.Schema(
   {
     serviceName: {

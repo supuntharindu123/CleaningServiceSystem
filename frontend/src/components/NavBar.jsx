@@ -78,7 +78,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md text-lg font-medium"
+                  className="bg-gradient-to-r from-emerald-600 to-gray-500 hover:bg-gray-700 hover:to-emerald-600 hover:from-gray-500 text-white px-4 py-2 rounded-md text-lg font-medium"
                 >
                   Register
                 </Link>

@@ -11,6 +11,7 @@ import { auth } from "../middleware/auth.js";
 
 const router = express.Router();
 
+// Define routes for booking
 router.post("/", auth, createBooking);
 router.get("/", auth, getBookings);
 router.get("/user/:id", auth, getBookingsByUserId);

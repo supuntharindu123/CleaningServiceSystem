@@ -13,6 +13,7 @@ const AdminUserPage = () => {
   const { axiosInstance } = useAuth();
 
   useEffect(() => {
+    // Fetch all users
     const fetchUsers = async () => {
       try {
         const response = await AllUsers(axiosInstance);
@@ -27,6 +28,7 @@ const AdminUserPage = () => {
     fetchUsers();
   }, [axiosInstance]);
 
+  // Fetch bookings for a user
   const fetchBooking = async (userId) => {
     try {
       console.log("Fetching bookings for user:", userId);
@@ -54,6 +56,7 @@ const AdminUserPage = () => {
     }
   };
 
+  // Format date and time for display
   const formatDateTime = (dateTime) => {
     if (!dateTime) return "No date";
     return new Date(dateTime).toLocaleString("en-US", {
@@ -65,6 +68,7 @@ const AdminUserPage = () => {
     });
   };
 
+  // Format date for display
   const formatDate = (dateTime) => {
     if (!dateTime) return "No date";
     return new Date(dateTime).toLocaleDateString("en-US", {

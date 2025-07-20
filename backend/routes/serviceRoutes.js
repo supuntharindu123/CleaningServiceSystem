@@ -9,6 +9,7 @@ import { auth } from "../middleware/auth.js";
 
 const router = express.Router();
 
+// Define routes for service
 router.post("/", auth, CreateService);
 router.get("/", GetServices);
 router.get("/:id", auth, GetServiceById);

@@ -1,5 +1,6 @@
 import axios from "axios";
 
+//Register a new user
 export async function RegisterUser(username, password) {
   try {
     const response = await axios.post(
@@ -19,6 +20,7 @@ export async function RegisterUser(username, password) {
   }
 }
 
+//Getting all users
 export async function AllUsers(axiosInstance) {
   try {
     const response = await axiosInstance.get(

@@ -26,6 +26,7 @@ const ServiceModal = ({
                   : "Update the service details below"}
               </p>
             </div>
+
             <button
               onClick={onClose}
               className="text-gray-400 hover:text-gray-600 hover:bg-gray-100 p-2 rounded-full transition-all duration-200"

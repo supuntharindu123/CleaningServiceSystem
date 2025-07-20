@@ -119,69 +119,6 @@ const UnAuthorizedPage = () => {
               </div>
             </button>
           </div>
-
-          {/* Security Notice */}
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
-            <div className="flex items-start space-x-3">
-              <div className="flex-shrink-0">
-                <svg
-                  className="w-5 h-5 text-blue-600 mt-0.5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                  />
-                </svg>
-              </div>
-              <div className="text-left">
-                <p className="text-sm font-medium text-blue-800">
-                  Security Notice
-                </p>
-                <p className="text-xs text-blue-700 mt-1">
-                  This page is protected to ensure the security of your cleaning
-                  service data and personal information.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Quick Access Links */}
-        <div className="mt-8 text-center">
-          <p className="text-sm text-gray-500 mb-4">
-            Quick access to public pages:
-          </p>
-          <div className="flex flex-wrap justify-center gap-2">
-            <a
-              href="/services"
-              className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 border border-gray-200 transition-colors duration-200"
-            >
-              Services
-            </a>
-            <a
-              href="/about"
-              className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 border border-gray-200 transition-colors duration-200"
-            >
-              About Us
-            </a>
-            <a
-              href="/contact"
-              className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 border border-gray-200 transition-colors duration-200"
-            >
-              Contact
-            </a>
-            <a
-              href="/register"
-              className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 border border-gray-200 transition-colors duration-200"
-            >
-              Sign Up
-            </a>
-          </div>
         </div>
       </div>
     </div>

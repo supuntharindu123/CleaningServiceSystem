@@ -13,6 +13,7 @@ export async function CreateBooking(axiosInstance, formdata) {
   }
 }
 
+// Update booking
 export async function UpdateBooking(axiosInstance, id, formdata) {
   try {
     //put request to update a booking
@@ -28,6 +29,7 @@ export async function UpdateBooking(axiosInstance, id, formdata) {
   }
 }
 
+// Delete booking
 export async function DeleteBooking(axiosInstance, id) {
   try {
     //delete request to delete a booking
@@ -43,6 +45,7 @@ export async function DeleteBooking(axiosInstance, id) {
   }
 }
 
+// Fetch booking by ID
 export async function GetBookingById(axiosInstance, id) {
   try {
     //get request to fetch a booking by ID
@@ -56,6 +59,7 @@ export async function GetBookingById(axiosInstance, id) {
     };
   }
 }
+// Fetch bookings for a specific user
 export async function GetBookingForUser(axiosInstance, userId) {
   try {
     //get request to fetch bookings by user ID
@@ -70,6 +74,7 @@ export async function GetBookingForUser(axiosInstance, userId) {
   }
 }
 
+// Fetch all bookings
 export async function GetAllBookings(axiosInstance) {
   try {
     //get request to fetch all bookings

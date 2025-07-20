@@ -18,6 +18,7 @@ const BookingForm = ({ BookingAction, InitialData, IsEdit, bookingId }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Format date for input field
     const formatDateForInput = (dateString) => {
       if (!dateString) return "";
 
@@ -39,6 +40,7 @@ const BookingForm = ({ BookingAction, InitialData, IsEdit, bookingId }) => {
       dateTime: formatDateForInput(InitialData.dateTime),
       serviceType: InitialData.serviceType,
     });
+    //fetch services
     const getServices = async () => {
       try {
         setLoading(true);
@@ -69,11 +71,13 @@ const BookingForm = ({ BookingAction, InitialData, IsEdit, bookingId }) => {
     }
   }, [InitialData, axiosInstance]);
 
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -107,6 +111,7 @@ const BookingForm = ({ BookingAction, InitialData, IsEdit, bookingId }) => {
     }
   };
 
+  // Handle cancel action
   const handleCancel = () => {
     const confirmCancel = window.confirm(
       "Are you sure you want to cancel? Any unsaved changes will be lost."

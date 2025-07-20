@@ -12,6 +12,7 @@ function RegisterForm() {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
+  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -54,6 +55,7 @@ function RegisterForm() {
     return newErrors;
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -235,7 +237,7 @@ function RegisterForm() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-emerald-500 to-emerald-700 text-white py-3 px-4 rounded-lg hover:from-emerald-600 hover:to-emerald-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-gradient-to-r from-emerald-600 to-gray-500 text-white py-3 px-4 rounded-lg font-bold hover:from-gray-500 hover:to-emerald-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <div className="flex items-center justify-center">

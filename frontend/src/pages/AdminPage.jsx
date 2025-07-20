@@ -10,6 +10,7 @@ const AdminPage = () => {
   const [loading, setLoading] = useState(true);
   const { axiosInstance } = useAuth();
 
+  // Format date for display
   const formatDateTime = (dateTime) => {
     if (!dateTime) return "No date";
     return new Date(dateTime).toLocaleString("en-US", {
@@ -22,6 +23,7 @@ const AdminPage = () => {
   };
 
   useEffect(() => {
+    // Fetch all bookings
     const fetchAllBookings = async () => {
       try {
         setLoading(true);
@@ -62,6 +64,7 @@ const AdminPage = () => {
     (b) => new Date(b.date_time).toDateString() === new Date().toDateString()
   ).length;
 
+  // Render loading state
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 py-8">

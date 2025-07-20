@@ -9,11 +9,11 @@ const DashBoardPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Fetch bookings for the logged-in user
   const fetchBookings = async () => {
     try {
       setLoading(true);
       setError(null);
-      console.log(`user`, user);
       const response = await GetBookingForUser(axiosInstance, user.id);
 
       if (!response.success) {
@@ -35,6 +35,7 @@ const DashBoardPage = () => {
     fetchBookings();
   }, []);
 
+  //remove booking function
   const removeBooking = async (id) => {
     if (!window.confirm("Are you sure you want to delete this booking?")) {
       return;
@@ -56,6 +57,7 @@ const DashBoardPage = () => {
     }
   };
 
+  // Format date and time for display
   const formatDateTime = (dateTime) => {
     if (!dateTime) return "No date";
     return new Date(dateTime).toLocaleString("en-US", {
@@ -67,6 +69,7 @@ const DashBoardPage = () => {
     });
   };
 
+  // Loading state
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">

@@ -15,6 +15,7 @@ function UpdateBookingPage() {
   });
 
   useEffect(() => {
+    // Fetch booking data by ID
     const bookingData = async () => {
       console.log("Fetching booking data for ID:", id);
       try {

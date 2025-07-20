@@ -112,39 +112,6 @@ const NotFound = () => {
             </button>
           </div>
         </div>
-
-        {/* Additional Navigation */}
-        <div className="mt-8 text-center">
-          <p className="text-sm text-gray-500 mb-4">
-            Popular pages you might be looking for:
-          </p>
-          <div className="flex flex-wrap justify-center gap-2">
-            <a
-              href="/services"
-              className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 border border-gray-200 transition-colors duration-200"
-            >
-              Services
-            </a>
-            <a
-              href="/booking"
-              className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 border border-gray-200 transition-colors duration-200"
-            >
-              Book Now
-            </a>
-            <a
-              href="/about"
-              className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 border border-gray-200 transition-colors duration-200"
-            >
-              About Us
-            </a>
-            <a
-              href="/login"
-              className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 border border-gray-200 transition-colors duration-200"
-            >
-              Login
-            </a>
-          </div>
-        </div>
       </div>
     </div>
   );

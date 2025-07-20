@@ -14,7 +14,7 @@ const DashBoardPage = () => {
       setLoading(true);
       setError(null);
       console.log(`user`, user);
-      const response = await GetBookingForUser(axiosInstance, user._id);
+      const response = await GetBookingForUser(axiosInstance, user.id);
 
       if (!response.success) {
         setError(response.error);
@@ -97,7 +97,7 @@ const DashBoardPage = () => {
             <div className="mt-4 sm:mt-0">
               <Link
                 to="/booking"
-                className="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-6 py-3 rounded-lg font-medium shadow-md transition-all duration-200 flex items-center space-x-2"
+                className="bg-gradient-to-r from-emerald-700 to-gray-500 hover:from-emerald-700 hover:to-emerald-800 text-white px-6 py-3 rounded-lg font-medium shadow-md transition-all duration-200 flex items-center space-x-2"
               >
                 <svg
                   className="w-5 h-5"
@@ -203,7 +203,8 @@ const DashBoardPage = () => {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div>
                           <div className="text-sm font-medium text-gray-900">
-                            {booking.service_id || "Unknown Service"}
+                            {booking.service_id?.serviceName ||
+                              "Unknown Service"}
                           </div>
                           <div className="text-sm text-gray-500">
                             {formatDateTime(booking.date_time)}

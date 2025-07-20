@@ -31,14 +31,11 @@ const AdminServicePage = () => {
         setLoading(true);
         const response = await fetchServices(axiosInstance);
         if (response.success) {
-          console.log("Services data:", response.data);
           setServices(response.data.services || response.data || []);
         } else {
-          console.error("Failed to fetch services:", response.error);
           alert("Failed to load services: " + response.error);
         }
       } catch (error) {
-        console.error("Error fetching services:", error);
         alert("Error loading services");
       } finally {
         setLoading(false);
@@ -86,37 +83,33 @@ const AdminServicePage = () => {
     setShowModal(true);
   };
 
+  const closeModal = () => {
+    setShowModal(false);
+    setSelectedService(null);
+    setFormData({ serviceName: "", description: "" });
+    setSubmitting(false);
+  };
+
   // Handle delete with alert confirmation
   const handleDeleteService = async (service) => {
     const confirmDelete = window.confirm(
       `Are you sure you want to delete "${service.serviceName}"?\n\nThis action cannot be undone.`
     );
 
-    if (!confirmDelete) {
-      return;
-    }
+    if (!confirmDelete) return;
 
     try {
       const response = await deleteService(service._id, axiosInstance);
 
       if (response.success) {
-        // Remove service from the list
         setServices((prev) => prev.filter((s) => s._id !== service._id));
         alert("Service deleted successfully!");
       } else {
         alert("Failed to delete service: " + response.error);
       }
     } catch (error) {
-      console.error("Error deleting service:", error);
       alert("An error occurred while deleting the service");
     }
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-    setSelectedService(null);
-    setFormData({ serviceName: "", description: "" });
-    setSubmitting(false);
   };
 
   // Form handlers
@@ -177,7 +170,6 @@ const AdminServicePage = () => {
 
       closeModal();
     } catch (error) {
-      console.error("Error submitting form:", error);
       alert("An error occurred while saving the service");
       setSubmitting(false);
     }
@@ -235,7 +227,7 @@ const AdminServicePage = () => {
             <div className="mt-4 lg:mt-0">
               <button
                 onClick={openCreateModal}
-                className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-6 py-3 rounded-lg font-medium shadow-md transition-all duration-200 flex items-center space-x-2"
+                className="bg-gradient-to-r from-green-600 to-gray-500 hover:from-gray-500 hover:to-green-600 text-white px-6 py-3 rounded-lg font-medium shadow-md transition-all duration-200 flex items-center space-x-2"
               >
                 <svg
                   className="w-5 h-5"
@@ -256,9 +248,9 @@ const AdminServicePage = () => {
           </div>
         </div>
 
-        {/* Stats Card */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+        {/* Stats and Search */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
             <div className="flex items-center">
               <div className="p-3 bg-green-100 rounded-lg">
                 <svg
@@ -284,98 +276,28 @@ const AdminServicePage = () => {
                 </p>
               </div>
             </div>
-          </div>
 
-          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <div className="flex items-center">
-              <div className="p-3 bg-blue-100 rounded-lg">
-                <svg
-                  className="w-6 h-6 text-blue-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">
-                  Search Results
-                </p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {filteredServices.length}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <div className="flex items-center">
-              <div className="p-3 bg-yellow-100 rounded-lg">
-                <svg
-                  className="w-6 h-6 text-yellow-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-500">
-                  Active Services
-                </p>
-                <p className="text-2xl font-bold text-gray-900">
-                  {services.length}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Search */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
-          <div className="flex items-center">
-            <div className="flex-1">
-              <label
-                htmlFor="search"
-                className="block text-sm font-medium text-gray-700 mb-2"
+            <div className="relative">
+              <svg
+                className="absolute left-3 top-3 w-5 h-5 text-gray-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                Search Services
-              </label>
-              <div className="relative">
-                <svg
-                  className="absolute left-3 top-3 w-5 h-5 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-                <input
-                  type="text"
-                  id="search"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  placeholder="Search by service name or description..."
-                  className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-400 focus:outline-none"
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                 />
-              </div>
+              </svg>
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search services..."
+                className="w-full pl-10 pr-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-400 focus:outline-none"
+              />
             </div>
           </div>
         </div>
@@ -393,26 +315,9 @@ const AdminServicePage = () => {
                     <h3 className="text-lg font-semibold text-gray-900 mb-2">
                       {service.serviceName}
                     </h3>
-                    <div className="flex items-center space-x-2 mb-3">
-                      <div className="p-2 bg-green-100 rounded-lg">
-                        <svg
-                          className="w-4 h-4 text-green-600"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                          />
-                        </svg>
-                      </div>
-                      <span className="text-sm text-gray-500">
-                        Active Service
-                      </span>
-                    </div>
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                      Active
+                    </span>
                   </div>
                 </div>
 
@@ -422,62 +327,49 @@ const AdminServicePage = () => {
 
                 <div className="border-t border-gray-100 pt-4">
                   <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
-                    <span>
-                      Created:{" "}
-                      {formatDate(service.createdAt || service.created_at)}
-                    </span>
-                    <span>
-                      Updated:{" "}
-                      {formatDate(service.updatedAt || service.updated_at)}
-                    </span>
+                    <span>Created: {formatDate(service.createdAt)}</span>
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-400">
-                      ID: {service._id?.slice(-6) || "N/A"}
-                    </span>
-
-                    <div className="flex items-center space-x-2">
-                      <button
-                        onClick={() => openEditModal(service)}
-                        className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors duration-200"
-                        title="Edit service"
+                  <div className="flex items-center justify-end space-x-2">
+                    <button
+                      onClick={() => openEditModal(service)}
+                      className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded-lg transition-colors duration-200"
+                      title="Edit service"
+                    >
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
                       >
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                          />
-                        </svg>
-                      </button>
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                        />
+                      </svg>
+                    </button>
 
-                      <button
-                        onClick={() => handleDeleteService(service)}
-                        className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition-colors duration-200"
-                        title="Delete service"
+                    <button
+                      onClick={() => handleDeleteService(service)}
+                      className="p-2 text-red-600 hover:text-red-800 hover:bg-red-50 rounded-lg transition-colors duration-200"
+                      title="Delete service"
+                    >
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
                       >
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                          />
-                        </svg>
-                      </button>
-                    </div>
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        />
+                      </svg>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -522,7 +414,7 @@ const AdminServicePage = () => {
           </div>
         )}
 
-        {/* Service Modal for Create/Edit Only */}
+        {/* Service Modal */}
         <ServiceModal
           isOpen={showModal}
           onClose={closeModal}

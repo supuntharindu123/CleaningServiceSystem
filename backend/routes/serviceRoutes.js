@@ -5,13 +5,14 @@ import CreateService, {
   GetServices,
   UpdateService,
 } from "../controller/serviceController.js";
+import { auth } from "../middleware/auth.js";
 
 const router = express.Router();
 
-router.post("/", CreateService);
+router.post("/", auth, CreateService);
 router.get("/", GetServices);
-router.get("/:id", GetServiceById);
-router.put("/:id", UpdateService);
-router.delete("/:id", DeleteService);
+router.get("/:id", auth, GetServiceById);
+router.put("/:id", auth, UpdateService);
+router.delete("/:id", auth, DeleteService);
 
 export default router;

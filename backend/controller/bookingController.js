@@ -37,11 +37,15 @@ export async function createBooking(req, res) {
  */
 export async function getBookings(req, res) {
   try {
-    const bookings = await Booking.find();
+    const bookings = await Booking.find()
+      .populate("service_id")
+      .sort({ createdAt: -1 });
 
     if (!bookings || bookings.length === 0) {
       return res.status(404).json({ msg: "No booking found" });
     }
+
+    console.log(`booking`, bookings);
 
     res.status(200).json({
       msg: "Booking retrieved successfully",
@@ -62,7 +66,9 @@ export async function getBookingsByUserId(req, res) {
   try {
     const id = req.params.id;
     //find bookings by user ID
-    const bookings = await Booking.find({ user_id: id });
+    const bookings = await Booking.find({ user_id: id })
+      .populate("service_id")
+      .sort({ createdAt: -1 });
     // Check if bookings exist for the user
     if (!bookings || bookings.length === 0) {
       return res.status(404).json({ msg: "No Booking found" });

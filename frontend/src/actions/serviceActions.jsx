@@ -3,12 +3,13 @@ import axios from "axios";
 export async function fetchServices(axiosInstance) {
   try {
     const response = await axiosInstance.get("/services");
+    console.log("Fetched services:", response.data);
     return { success: true, data: response.data };
   } catch (error) {
     console.error("Failed to fetch services", error);
     return {
       success: false,
-      error: error.response?.data?.message || "Failed to fetch services",
+      error: error.response?.data?.msg || "Failed to fetch services",
     };
   }
 }
@@ -16,15 +17,15 @@ export async function fetchServices(axiosInstance) {
 export async function createService(serviceName, description, axiosInstance) {
   try {
     const response = await axiosInstance.post("/services", {
-      serviceName,
-      description,
+      serviceName: serviceName,
+      description: description,
     });
     return { success: true, data: response.data };
   } catch (error) {
     console.error("Failed to create service", error);
     return {
       success: false,
-      error: error.response?.data?.message || "Failed to create service",
+      error: error.response?.data?.msg || "Failed to create service",
     };
   }
 }
@@ -37,7 +38,7 @@ export async function updateService(
 ) {
   try {
     const response = await axiosInstance.put(`/services/${serviceId}`, {
-      serviceName,
+      name: serviceName, // Changed to match backend expectation
       description,
     });
     return { success: true, data: response.data };
@@ -45,7 +46,7 @@ export async function updateService(
     console.error("Failed to update service", error);
     return {
       success: false,
-      error: error.response?.data?.message || "Failed to update service",
+      error: error.response?.data?.msg || "Failed to update service",
     };
   }
 }
@@ -58,7 +59,7 @@ export async function deleteService(serviceId, axiosInstance) {
     console.error("Failed to delete service", error);
     return {
       success: false,
-      error: error.response?.data?.message || "Failed to delete service",
+      error: error.response?.data?.msg || "Failed to delete service",
     };
   }
 }
@@ -68,10 +69,10 @@ export async function GetservicesById(serviceId, axiosInstance) {
     const response = await axiosInstance.get(`/services/${serviceId}`);
     return { success: true, data: response.data };
   } catch (error) {
-    console.error("Failed to delete service", error);
+    console.error("Failed to get service", error);
     return {
       success: false,
-      error: error.response?.data?.message || "Failed to delete service",
+      error: error.response?.data?.msg || "Failed to get service",
     };
   }
 }

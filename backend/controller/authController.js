@@ -64,7 +64,7 @@ export async function Login(req, res) {
     const token = await generateToken(user._id, username, user.role);
 
     res.status(200).json({
-      userDetails: { username: user.username, role: user.role },
+      userDetails: { id: user._id, username: user.username, role: user.role },
       token,
       msg: "Login Successful !",
     });

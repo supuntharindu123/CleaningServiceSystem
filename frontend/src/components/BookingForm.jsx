@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { useAuth } from "../context/authcontext";
 import { fetchServices } from "../actions/serviceActions";
 
@@ -43,17 +42,32 @@ const BookingForm = ({ BookingAction, InitialData, IsEdit, bookingId }) => {
     const getServices = async () => {
       try {
         setLoading(true);
-        const service = await fetchServices();
-        setServices(service.data.services);
+
+        if (!axiosInstance) {
+          console.log("Waiting for axios instance...");
+          return;
+        }
+
+        const service = await fetchServices(axiosInstance);
+
+        if (service.success) {
+          setServices(service.data.services || []);
+        } else {
+          console.error("Failed to fetch services:", service.error);
+          setServices([]);
+        }
       } catch (err) {
         console.log("Failed to fetch services", err);
+        setServices([]);
       } finally {
         setLoading(false);
       }
     };
 
-    getServices();
-  }, [InitialData]);
+    if (axiosInstance) {
+      getServices();
+    }
+  }, [InitialData, axiosInstance]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -68,14 +82,15 @@ const BookingForm = ({ BookingAction, InitialData, IsEdit, bookingId }) => {
       return;
     }
 
-    console.log("Form Data:", formData);
-    console.log(bookingId);
+    if (!axiosInstance) {
+      alert("Authentication not ready. Please try again.");
+      return;
+    }
 
     try {
       var response;
       if (IsEdit) {
         response = await BookingAction(axiosInstance, bookingId, formData);
-        console.log("edit");
       } else {
         response = await BookingAction(axiosInstance, formData);
       }
@@ -88,9 +103,32 @@ const BookingForm = ({ BookingAction, InitialData, IsEdit, bookingId }) => {
       }
     } catch (error) {
       console.error("Failed ", error);
-      alert(error.msg);
+      alert("An error occurred. Please try again.");
     }
   };
+
+  const handleCancel = () => {
+    const confirmCancel = window.confirm(
+      "Are you sure you want to cancel? Any unsaved changes will be lost."
+    );
+
+    if (confirmCancel) {
+      navigate("/dashboard");
+    }
+  };
+
+  if (!axiosInstance) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className="bg-white p-8 rounded-lg shadow-md">
+          <div className="flex items-center space-x-4">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+            <span className="text-gray-600">Initializing...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
@@ -176,7 +214,6 @@ const BookingForm = ({ BookingAction, InitialData, IsEdit, bookingId }) => {
               required
               className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
             >
-              {/* Add default option */}
               <option value="" disabled>
                 {loading ? "Loading services..." : "Select a service"}
               </option>
@@ -188,18 +225,26 @@ const BookingForm = ({ BookingAction, InitialData, IsEdit, bookingId }) => {
             </select>
           </div>
 
-          {/* Submit */}
-          <div className="pt-2">
+          {/* Submit and Cancel Buttons */}
+          <div className="pt-2 space-y-3">
             <button
               type="submit"
-              disabled={loading || !formData.serviceType}
-              className="w-full bg-gradient-to-r from-gray-500 to-emerald-700 text-white py-3 px-4 rounded-lg hover:from-emerald-700 hover:to-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={loading || !formData.serviceType || !axiosInstance}
+              className="w-full bg-gradient-to-r from-emerald-600 to-gray-500 text-white py-3 px-4 rounded-lg hover:from-gray-500 hover:to-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed font-medium"
             >
               {loading
                 ? "Loading..."
                 : IsEdit
                 ? "Update Booking"
                 : "Confirm Booking"}
+            </button>
+
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="w-full bg-gray-500 hover:bg-gray-600 text-white py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition-all duration-200 shadow-sm font-medium"
+            >
+              Cancel
             </button>
           </div>
         </form>

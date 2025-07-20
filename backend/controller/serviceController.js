@@ -9,22 +9,25 @@ import Service from "../models/Service.js";
  */
 export default async function CreateService(req, res) {
   try {
-    const { name } = req.body;
+    const { serviceName, description } = req.body;
 
     // Validate input
-    if (!name) {
+    if (!serviceName) {
       return res.status(400).json({ msg: "Service name is required" });
     }
 
     // Check if the service already exists
-    const existingService = await Service.findOne({ serviceName: name });
+    const existingService = await Service.findOne({ serviceName: serviceName });
 
     if (existingService) {
       return res.status(400).json({ msg: "Service already exists" });
     }
 
     // Create and save the new service
-    const service = await Service.create({ serviceName: name });
+    const service = await Service.create({
+      serviceName,
+      description,
+    });
 
     res.status(201).json({
       msg: "Service creation successful!",
@@ -69,7 +72,7 @@ export async function GetServices(req, res) {
 export async function UpdateService(req, res) {
   try {
     const { id } = req.params;
-    const { name } = req.body;
+    const { name, description } = req.body;
 
     // Validate input
     if (!name) {
@@ -79,7 +82,10 @@ export async function UpdateService(req, res) {
     // Find and update service
     const service = await Service.findByIdAndUpdate(
       id,
-      { name },
+      {
+        name,
+        description,
+      },
       { new: true }
     );
 

@@ -85,7 +85,7 @@ const AdminNavbar = () => {
           <div className="flex items-center">
             <div className="flex-shrink-0 flex items-center">
               <div className="ml-3">
-                <h1 className="text-xl font-bold bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent">
+                <h1 className="text-xl font-bold bg-gradient-to-r from-emerald-600 to-gray-600 bg-clip-text text-transparent">
                   Admin
                 </h1>
                 <p className="text-xs text-gray-500">Management Portal</p>
@@ -102,7 +102,7 @@ const AdminNavbar = () => {
                   onClick={() => navigate(item.path)}
                   className={`px-4 py-2 rounded-lg text-sm font-medium flex items-center space-x-2 transition-all duration-200 ${
                     isActiveRoute(item.path)
-                      ? "bg-gradient-to-r from-emerald-500 to-blue-500 text-white shadow-md"
+                      ? "bg-gradient-to-r from-emerald-500 to-gray-500 text-white shadow-md"
                       : "text-gray-600 hover:text-emerald-600 hover:bg-emerald-50"
                   }`}
                 >
@@ -149,7 +149,7 @@ const AdminNavbar = () => {
                   }}
                   className={`w-full text-left px-3 py-2 rounded-md text-base font-medium flex items-center space-x-3 ${
                     isActiveRoute(item.path)
-                      ? "bg-gradient-to-r from-emerald-500 to-blue-500 text-white"
+                      ? "bg-gradient-to-r from-emerald-500 to-gray-500 text-white"
                       : "text-gray-600 hover:text-emerald-600 hover:bg-emerald-50"
                   }`}
                 >
@@ -158,25 +158,6 @@ const AdminNavbar = () => {
                 </button>
               ))}
               <hr className="my-2" />
-              <button
-                onClick={handleLogout}
-                className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-50 flex items-center space-x-3"
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                  />
-                </svg>
-                <span>Sign Out</span>
-              </button>
             </div>
           </div>
         )}

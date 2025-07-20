@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { RegisterUser } from "../actions/authActions";
+import RegisterUser from "../actions/authActions";
 
 function RegisterForm() {
   const navigate = useNavigate();
@@ -67,11 +67,7 @@ function RegisterForm() {
     setErrors({});
 
     try {
-      const result = await RegisterUser(
-        formData.username,
-
-        formData.password
-      );
+      const result = await RegisterUser(formData.username, formData.password);
 
       if (result.success) {
         alert("Registration successful! Please sign in to continue.");

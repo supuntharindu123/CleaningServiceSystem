@@ -8,18 +8,18 @@ import Booking from "../models/Booking.js";
  */
 export const createBooking = async (req, res) => {
   try {
-    const { customer_name, address, date_time, service_id } = req.body;
+    const { username, address, dateTime, serviceType } = req.body;
     const user_id = req.user.id;
 
-    if (!customer_name || !address || !date_time || !service_id) {
+    if (!username || !address || !dateTime || !serviceType) {
       return res.status(400).json({ msg: "All fields are required." });
     }
 
     const booking = await Booking.create({
-      customer_name,
+      customer_name: username,
       address,
-      date_time,
-      service_id,
+      date_time: dateTime,
+      service_id: serviceType,
       user_id,
     });
 

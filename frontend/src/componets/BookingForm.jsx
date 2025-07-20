@@ -1,136 +1,174 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { CreateBooking } from "../actions/bookingActions";
+import { useAuth } from "../context/authcontext";
+import { fetchServices } from "../actions/serviceActions";
 
 const BookingForm = () => {
+  const { axiosInstance } = useAuth();
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: "",
     address: "",
     dateTime: "",
-    serviceType: "standard", // default value
+    serviceType: "",
   });
 
-  const serviceOptions = [
-    { value: "standard", label: "Standard Cleaning" },
-    { value: "deep", label: "Deep Cleaning" },
-    { value: "carpet", label: "Carpet Cleaning" },
-    { value: "window", label: "Window Cleaning" },
-    { value: "move", label: "Move-In/Move-Out Cleaning" },
-  ];
+  const [services, setServices] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const getServices = async () => {
+      try {
+        setLoading(true);
+        const service = await fetchServices();
+        setServices(service.data.services);
+      } catch (err) {
+        console.log("Failed to fetch services", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getServices();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Booking submitted:", formData);
-    // Add your API call here
-    navigate("/confirmation"); // Redirect after submission
+
+    if (!formData.serviceType) {
+      alert("Please select a service type");
+      return;
+    }
+
+    try {
+      const response = await CreateBooking(axiosInstance, formData);
+      if (response.success) {
+        alert(response.data.msg || "Booking created successfully!");
+        navigate("/");
+      } else {
+        alert("Error: " + response.error);
+      }
+    } catch (error) {
+      console.error("Failed to create booking:", error);
+      alert(error.msg);
+    }
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md border border-gray-200">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-        Book a Cleaning Service
-      </h2>
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl border border-gray-200">
+        <h2 className="text-3xl font-bold text-emerald-700 mb-6 text-center">
+          Book a Cleaning Service
+        </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Username Field */}
-        <div>
-          <label
-            htmlFor="username"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Full Name *
-          </label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-            required
-            placeholder="John Doe"
-          />
-        </div>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Username */}
+          <div>
+            <label
+              htmlFor="username"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Full Name *
+            </label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+              placeholder="John Doe"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
+            />
+          </div>
 
-        {/* Address Field */}
-        <div>
-          <label
-            htmlFor="address"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Address *
-          </label>
-          <textarea
-            id="address"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            rows={3}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-            required
-            placeholder="123 Main St, City, State ZIP"
-          />
-        </div>
+          {/* Address */}
+          <div>
+            <label
+              htmlFor="address"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Address *
+            </label>
+            <textarea
+              id="address"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              rows={3}
+              required
+              placeholder="123 Main St, City, State ZIP"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
+            />
+          </div>
 
-        {/* Date and Time Field */}
-        <div>
-          <label
-            htmlFor="dateTime"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Date & Time *
-          </label>
-          <input
-            type="datetime-local"
-            id="dateTime"
-            name="dateTime"
-            value={formData.dateTime}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-            required
-            min={new Date().toISOString().slice(0, 16)} // Disable past dates
-          />
-        </div>
+          {/* Date and Time */}
+          <div>
+            <label
+              htmlFor="dateTime"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Date & Time *
+            </label>
+            <input
+              type="datetime-local"
+              id="dateTime"
+              name="dateTime"
+              value={formData.dateTime}
+              onChange={handleChange}
+              required
+              min={new Date().toISOString().slice(0, 16)}
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
+            />
+          </div>
 
-        {/* Service Type Dropdown */}
-        <div>
-          <label
-            htmlFor="serviceType"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Service Type *
-          </label>
-          <select
-            id="serviceType"
-            name="serviceType"
-            value={formData.serviceType}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
-            required
-          >
-            {serviceOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
+          {/* Service Type */}
+          <div>
+            <label
+              htmlFor="serviceType"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Service Type *
+            </label>
+            <select
+              id="serviceType"
+              name="serviceType"
+              value={formData.serviceType}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-400 focus:outline-none"
+            >
+              {/* Add default option */}
+              <option value="" disabled>
+                {loading ? "Loading services..." : "Select a service"}
               </option>
-            ))}
-          </select>
-        </div>
+              {services.map((option) => (
+                <option key={option._id} value={option._id}>
+                  {option.serviceName}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        {/* Submit Button */}
-        <div className="pt-4">
-          <button
-            type="submit"
-            className="w-full bg-emerald-600 text-white py-2.5 px-4 rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors"
-          >
-            Confirm Booking
-          </button>
-        </div>
-      </form>
+          {/* Submit */}
+          <div className="pt-2">
+            <button
+              type="submit"
+              disabled={loading || !formData.serviceType}
+              className="w-full bg-gradient-to-r from-gray-500 to-emerald-700 text-white py-3 px-4 rounded-lg hover:from-emerald-700 hover:to-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-200 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? "Loading..." : "Confirm Booking"}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

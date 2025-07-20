@@ -1,4 +1,4 @@
-import { Children, React, createContext, useContext, useState } from "react";
+import { React, createContext, useContext, useState } from "react";
 import axios from "axios";
 
 const AuthContext = createContext();
@@ -6,23 +6,34 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [usertoken, setuserToken] = useState(localStorage.getItem("token"));
+
+  const axiosInstance = axios.create({
+    baseURL: "http://localhost:3000/api",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  axiosInstance.interceptors.request.use((config) => {
+    if (usertoken) {
+      config.headers["Authorization"] = `Bearer ${usertoken}`;
+    }
+    return config;
+  });
 
   const login = async (username, password) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
-        {
-          username,
-          password,
-        }
-      );
+      const response = await axiosInstance.post("/auth/login", {
+        username,
+        password,
+      });
       console.log(`Login response:`, response);
       const { userDetails, token } = response.data;
       setUser(userDetails);
-
-      console.log(`Setting user:`, user);
+      setuserToken(token);
       localStorage.setItem("token", token);
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
       return { success: true };
     } catch (error) {
       console.error("Login failed", error);
@@ -36,10 +47,10 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem("token");
-    delete axios.defaults.headers.common["Authorization"];
+    setuserToken("");
   };
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, axiosInstance }}>
       {children}
     </AuthContext.Provider>
   );

@@ -4,6 +4,7 @@ import User from "../models/User.js";
 export async function auth(req, res, next) {
   try {
     const token = req.header("Authorization").replace("Bearer", "").trim();
+
     if (!token) return res.status(401).json({ msg: "Token required" });
     const verify = JWT.verify(token, process.env.JWT_SECRET);
 

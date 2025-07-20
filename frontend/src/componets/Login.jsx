@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { LoginUser } from "../actions/authActions";
 import { useAuth } from "../context/authcontext";
 
 function Login() {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import RegisterUser from "../actions/authActions";
+import { RegisterUser } from "../actions/authActions";
 
 function RegisterForm() {
   const navigate = useNavigate();

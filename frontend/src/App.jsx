@@ -1,10 +1,9 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./componets/Login";
-import Footer from "./componets/Footer";
+import Footer from "./components/Footer";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import Navbar from "./componets/NavBar";
+import Navbar from "./components/NavBar";
 import BookingPage from "./pages/BookingPage";
 
 import NotFound from "./pages/NotFound";
@@ -14,8 +13,9 @@ import HomePage from "./pages/HomePage";
 import DashBoardPage from "./pages/DashBoardPage";
 import UpdateBookingPage from "./pages/UpdateBookingPage";
 import AdminPage from "./pages/AdminPage";
-import AdminUserPage from "./pages/AdminUserPage";
+
 import AdminServicePage from "./pages/AdminServicePage";
+import AdminUserPage from "./pages/AdminUserPage";
 
 function App() {
   const router = [

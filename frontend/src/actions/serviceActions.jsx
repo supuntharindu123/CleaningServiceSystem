@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export async function fetchServices() {
+export async function fetchServices(axiosInstance) {
   try {
-    const response = await axios.get("http://localhost:3000/api/services");
+    const response = await axiosInstance.get("/services");
     return { success: true, data: response.data };
   } catch (error) {
     console.error("Failed to fetch services", error);
@@ -13,12 +13,12 @@ export async function fetchServices() {
   }
 }
 
-export async function createService(serviceName) {
+export async function createService(serviceName, description, axiosInstance) {
   try {
-    const response = await axios.post(
-      "http://localhost:3000/api/services",
-      serviceName
-    );
+    const response = await axiosInstance.post("/services", {
+      serviceName,
+      description,
+    });
     return { success: true, data: response.data };
   } catch (error) {
     console.error("Failed to create service", error);
@@ -29,12 +29,17 @@ export async function createService(serviceName) {
   }
 }
 
-export async function updateService(serviceId, serviceName) {
+export async function updateService(
+  serviceId,
+  serviceName,
+  description,
+  axiosInstance
+) {
   try {
-    const response = await axios.put(
-      `http://localhost:3000/api/services/${serviceId}`,
-      { serviceName }
-    );
+    const response = await axiosInstance.put(`/services/${serviceId}`, {
+      serviceName,
+      description,
+    });
     return { success: true, data: response.data };
   } catch (error) {
     console.error("Failed to update service", error);
@@ -45,11 +50,22 @@ export async function updateService(serviceId, serviceName) {
   }
 }
 
-export async function deleteService(serviceId) {
+export async function deleteService(serviceId, axiosInstance) {
   try {
-    const response = await axios.delete(
-      `http://localhost:3000/api/services/${serviceId}`
-    );
+    const response = await axiosInstance.delete(`/services/${serviceId}`);
+    return { success: true, data: response.data };
+  } catch (error) {
+    console.error("Failed to delete service", error);
+    return {
+      success: false,
+      error: error.response?.data?.message || "Failed to delete service",
+    };
+  }
+}
+
+export async function GetservicesById(serviceId, axiosInstance) {
+  try {
+    const response = await axiosInstance.get(`/services/${serviceId}`);
     return { success: true, data: response.data };
   } catch (error) {
     console.error("Failed to delete service", error);

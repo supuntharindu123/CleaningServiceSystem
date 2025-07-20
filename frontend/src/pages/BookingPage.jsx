@@ -1,5 +1,5 @@
 import React from "react";
-import BookingForm from "../componets/BookingForm";
+import BookingForm from "../components/BookingForm";
 import { CreateBooking } from "../actions/bookingActions";
 
 function BookingPage() {

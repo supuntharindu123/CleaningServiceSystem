@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AdminNavbar from "../componets/adminNavbar";
+import AdminNavbar from "../components/adminNavbar";
 import { GetAllBookings } from "../actions/bookingActions";
 import { useAuth } from "../context/authcontext";
 

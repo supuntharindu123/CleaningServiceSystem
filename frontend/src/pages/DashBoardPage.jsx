@@ -13,7 +13,8 @@ const DashBoardPage = () => {
     try {
       setLoading(true);
       setError(null);
-      const response = await GetBookingForUser(axiosInstance);
+      console.log(`user`, user);
+      const response = await GetBookingForUser(axiosInstance, user._id);
 
       if (!response.success) {
         setError(response.error);

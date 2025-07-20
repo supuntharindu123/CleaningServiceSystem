@@ -37,7 +37,6 @@ export async function createBooking(req, res) {
  */
 export async function getBookings(req, res) {
   try {
-    const user_id = req.user.id;
     const bookings = await Booking.find();
 
     if (!bookings || bookings.length === 0) {
@@ -61,9 +60,10 @@ export async function getBookings(req, res) {
  */
 export async function getBookingsByUserId(req, res) {
   try {
-    const { userId } = req.params;
-    const bookings = await Booking.find({ user_id: userId });
-
+    const id = req.params.id;
+    //find bookings by user ID
+    const bookings = await Booking.find({ user_id: id });
+    // Check if bookings exist for the user
     if (!bookings || bookings.length === 0) {
       return res.status(404).json({ msg: "No Booking found" });
     }

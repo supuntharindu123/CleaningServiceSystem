@@ -1,5 +1,6 @@
 export async function CreateBooking(axiosInstance, formdata) {
   try {
+    //post request to create a booking
     const response = await axiosInstance.post("/booking", formdata);
 
     return { success: true, data: response.data };
@@ -14,7 +15,7 @@ export async function CreateBooking(axiosInstance, formdata) {
 
 export async function UpdateBooking(axiosInstance, id, formdata) {
   try {
-    console.log("Updating booking with ID:", id, "and data:", formdata);
+    //put request to update a booking
     const response = await axiosInstance.put(`/booking/${id}`, formdata);
 
     return { success: true, data: response.data };
@@ -29,6 +30,7 @@ export async function UpdateBooking(axiosInstance, id, formdata) {
 
 export async function DeleteBooking(axiosInstance, id) {
   try {
+    //delete request to delete a booking
     const response = await axiosInstance.delete(`/booking/${id}`);
 
     return { success: true, data: response.data };
@@ -43,6 +45,7 @@ export async function DeleteBooking(axiosInstance, id) {
 
 export async function GetBookingById(axiosInstance, id) {
   try {
+    //get request to fetch a booking by ID
     const response = await axiosInstance.get(`/booking/${id}`);
     return { success: true, data: response.data };
   } catch (error) {
@@ -53,9 +56,10 @@ export async function GetBookingById(axiosInstance, id) {
     };
   }
 }
-export async function GetBookingForUser(axiosInstance) {
+export async function GetBookingForUser(axiosInstance, userId) {
   try {
-    const response = await axiosInstance.get("/booking");
+    //get request to fetch bookings by user ID
+    const response = await axiosInstance.get(`/booking/user/${userId}`);
     return { success: true, data: response.data };
   } catch (error) {
     console.error("Failed to fetch bookings", error);
@@ -68,6 +72,7 @@ export async function GetBookingForUser(axiosInstance) {
 
 export async function GetAllBookings(axiosInstance) {
   try {
+    //get request to fetch all bookings
     const response = await axiosInstance.get("/booking");
     return { success: true, data: response.data };
   } catch (error) {
